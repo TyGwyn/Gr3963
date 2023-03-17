@@ -8,7 +8,7 @@
 
 //Преобразуем наше число в строку
 Console.WriteLine("Введите число: ");
-string num = Console.ReadLine();
+string? num = Console.ReadLine();
 //Создаём массив на основе строки
 char[] arr = num.ToCharArray();
 //Находим третью цифру, находящуюся в массиве под индексом 2

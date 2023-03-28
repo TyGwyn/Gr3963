@@ -1,9 +1,4 @@
-﻿//Задача 50. Напишите программу, которая на вход принимает позиции элемента в двумерном массиве, и возвращает значение этого элемента или же указание, что такого элемента нет.
-//Например, задан массив:
-//1 4 7 2
-//5 9 2 3
-//8 4 2 4
-int[,] Gen2DArr(int countRow, int countColumn, int min, int max)
+﻿int[,] Gen2DArr(int countRow, int countColumn, int min, int max)
 //Блок корректировки входных данных
 {
 
@@ -55,29 +50,56 @@ void PrintData(string line)
 {
     Console.WriteLine(line);
 }
-string NumSearch(int [,]arr, int rowIndex, int columnIndex)
+(int x, int y) SearchMinElemIn2DArr(int [,]arr)
 {
-    string res = ("Такого элемента массива не существует!");
-    for (int i=0; i < arr.GetLength(0); i++)
+    int row = 0;
+    int column =0;
+    int min = int.MaxValue;
+    for (int i = 0; i < arr.GetLength(0); i++)
     {
-        for (int j=0; j < arr.GetLength(1); j++)
-        {
-            if ((i==rowIndex)&&(j==columnIndex))
+       for(int j=0;j<arr.GetLength(1); j++)
+       {
+            if (arr[i,j]<min)
             {
-                int num = arr[i,j];
-                res = Convert.ToString(num);
+                min = arr[i,j];
+                row = i;
+                column = j;
             }
-        
-        }
+       } 
     }
+    return (row,column);
+}
+int [,] Update2DArr(int[,]arr, int row, int col)
+{
+    int k = 0;
+    int m =0;
+    int [,] res = new int [arr.GetLength(0)-1,arr.GetLength(1)-1];
+    for (int i = 0; i < arr.GetLength(0); i++)
+    {
+        m=0;
+        for(int j=0;j<arr.GetLength(1); j++)
+        {
+            if(j!=col && i!=row)
+            {
+                res[k,m]=arr[i,j];
+                m++;
+            }
+        }
+        if(i!=row)
+        {
+            k++;
+        }
+    
+    }
+
     return res;
 }
 int row = ReadData("Введите количество строк: ");
 int column = ReadData("Введите количество столбцов: ");
-int[,]Test2dArr = Gen2DArr(row,column,1,99);
-PrintData("Заданный массив: ");
+int [,]Test2dArr = Gen2DArr(row,column, 0, 100);
+PrintData("Исходный массив");
 Print2DArr(Test2dArr);
-int rowIndex = ReadData("Введите индекс по поиску элемента по строкам: ");
-int columnIndex = ReadData("Введите индекс по поиску элемента по столбцам: ");
-string res = NumSearch(Test2dArr, rowIndex, columnIndex);
-PrintData("Результат проведения поиска по двумерному массиву: " + res);
+(int x, int y) minElem = SearchMinElemIn2DArr(Test2dArr);
+PrintData("Искомый массив");
+int [,]resArr = Update2DArr(Test2dArr, minElem.x, minElem.y);
+Print2DArr(resArr);

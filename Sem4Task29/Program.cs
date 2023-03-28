@@ -1,4 +1,5 @@
-﻿void Print1DArr(int[] arr)
+﻿
+void Print1DArr(int[] arr)
 {
     Console.Write("[");
     for (int i = 0; i < arr.Length-1; i++)

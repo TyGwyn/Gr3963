@@ -1,8 +1,12 @@
-﻿//Задача 50. Напишите программу, которая на вход принимает позиции элемента в двумерном массиве, и возвращает значение этого элемента или же указание, что такого элемента нет.
-//Например, задан массив:
-//1 4 7 2
-//5 9 2 3
-//8 4 2 4
+﻿void Print1DArr(int[] arr)
+{
+    Console.Write("[");
+    for (int i = 0; i < arr.Length-1; i++)
+    {
+        Console.Write(arr[i]+ ", ");
+    }
+    Console.WriteLine(arr[arr.Length-1]+ "]");
+}
 int[,] Gen2DArr(int countRow, int countColumn, int min, int max)
 //Блок корректировки входных данных
 {
@@ -55,29 +59,23 @@ void PrintData(string line)
 {
     Console.WriteLine(line);
 }
-string NumSearch(int [,]arr, int rowIndex, int columnIndex)
+int [] FreqDicBuild(int [,]arr, int len)
 {
-    string res = ("Такого элемента массива не существует!");
-    for (int i=0; i < arr.GetLength(0); i++)
+    int [] dic = new int[len];
+    for (int i = 0; i < arr.GetLength(0); i++)
     {
-        for (int j=0; j < arr.GetLength(1); j++)
+        for(int j=0;j<arr.GetLength(1); j++)
         {
-            if ((i==rowIndex)&&(j==columnIndex))
-            {
-                int num = arr[i,j];
-                res = Convert.ToString(num);
-            }
-        
+            dic[arr[i,j]]++;
         }
     }
-    return res;
+    return dic;
 }
 int row = ReadData("Введите количество строк: ");
 int column = ReadData("Введите количество столбцов: ");
-int[,]Test2dArr = Gen2DArr(row,column,1,99);
-PrintData("Заданный массив: ");
+int [,]Test2dArr = Gen2DArr(row,column, 0, 10);
+PrintData("Исходный массив");
 Print2DArr(Test2dArr);
-int rowIndex = ReadData("Введите индекс по поиску элемента по строкам: ");
-int columnIndex = ReadData("Введите индекс по поиску элемента по столбцам: ");
-string res = NumSearch(Test2dArr, rowIndex, columnIndex);
-PrintData("Результат проведения поиска по двумерному массиву: " + res);
+PrintData("Искомый массив");
+int []dic = FreqDicBuild(Test2dArr,10);
+Print1DArr(dic);

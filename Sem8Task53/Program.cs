@@ -1,9 +1,4 @@
-﻿//Задача 50. Напишите программу, которая на вход принимает позиции элемента в двумерном массиве, и возвращает значение этого элемента или же указание, что такого элемента нет.
-//Например, задан массив:
-//1 4 7 2
-//5 9 2 3
-//8 4 2 4
-int[,] Gen2DArr(int countRow, int countColumn, int min, int max)
+﻿int[,] Gen2DArr(int countRow, int countColumn, int min, int max)
 //Блок корректировки входных данных
 {
 
@@ -45,6 +40,16 @@ void Print2DArr(int[,] arr)
         Console.WriteLine();
     }
 }
+void Change2DArr(int [,]arr)
+{
+    int temp = 0;
+    for (int i=0; i<arr.GetLength(1); i++)
+    {
+        temp = arr[0,i];
+        arr[0,i]=arr[arr.GetLength(0)-1,i];
+        arr[arr.GetLength(0)-1,i] = temp;
+    }
+}
 int ReadData(string line)
 {
     Console.WriteLine(line);
@@ -55,29 +60,11 @@ void PrintData(string line)
 {
     Console.WriteLine(line);
 }
-string NumSearch(int [,]arr, int rowIndex, int columnIndex)
-{
-    string res = ("Такого элемента массива не существует!");
-    for (int i=0; i < arr.GetLength(0); i++)
-    {
-        for (int j=0; j < arr.GetLength(1); j++)
-        {
-            if ((i==rowIndex)&&(j==columnIndex))
-            {
-                int num = arr[i,j];
-                res = Convert.ToString(num);
-            }
-        
-        }
-    }
-    return res;
-}
 int row = ReadData("Введите количество строк: ");
-int column = ReadData("Введите количество столбцов: ");
-int[,]Test2dArr = Gen2DArr(row,column,1,99);
-PrintData("Заданный массив: ");
+int column = ReadData("Введите количество строк: ");
+int [,]Test2dArr = Gen2DArr(row,column, 10, 99);
+PrintData("Исходный массив");
 Print2DArr(Test2dArr);
-int rowIndex = ReadData("Введите индекс по поиску элемента по строкам: ");
-int columnIndex = ReadData("Введите индекс по поиску элемента по столбцам: ");
-string res = NumSearch(Test2dArr, rowIndex, columnIndex);
-PrintData("Результат проведения поиска по двумерному массиву: " + res);
+PrintData("Искомый массив");
+Change2DArr(Test2dArr);
+Print2DArr(Test2dArr);
